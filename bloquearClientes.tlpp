@@ -1,0 +1,75 @@
+#include 'TOTVS.CH'
+#include 'Protheus.ch'
+
+/*/{Protheus.doc} TGet2
+Fonte criado para bloquear e desbloquear clientess
+@type function
+@version  
+@author Alysson Oliveira
+@since 04/07/2024
+@return variant, return_description
+/*/
+User Function TGet2()
+
+    Local oGet1, oGet2
+    Local oSay1, oSay2
+    Local cGet1 := Space(6) // Não excerder o tamanho do dado recebido da tabela
+    Local cGet2 := Space(2)
+    Local oFont1
+    Local oButton1, oButton2
+    Local oDlg1
+
+    oDlg1 := TDialog():New(0,0,200,500,'BLOQUEADOR DE CLIENTES',,,,,CLR_BLACK,CLR_WHITE,,,.T.)
+    oFont1 := TFont():New('Arial',,-12,.T.,.T.)
+
+     oSay1     := TSay():New(010,010,{||'Cliente'},oDlg1,,oFont1,,,,.T.,CLR_BLUE,CLR_WHITE,100,20)
+     oGet1     := TGet():New(020,010,{|u|if(PCount()>0,cGet1:=u,cGet1)},oDlg1,040,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGet1,,,,.T. )
+     oGet1:cF3 := 'SA1' //Adicionando consulta padrão ao Get
+     
+     oSay2    := TSay():New(010,070,{||'Loja'},oDlg1,,oFont1,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+     oGet2    := TGet():New(020,070,{|u|if(PCount()>0,cGet2:=u,cGet2)},oDlg1,040,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGet2,,,, )
+
+     oButton1 := TButton():New(040, 010, "BLOQUEAR",oDlg1,{|| fBloq(cGet1,cGet2)}, 40,15,,oFont1,.F.,.T.,.F.,,.F.,,,.F. )
+     oButton2 := TButton():New(040, 60, "DESBLOQUEAR",oDlg1,{|| fDesb(cGet1,cGet2)}, 60,15,,oFont1,.F.,.T.,.F.,,.F.,,,.F. )
+     
+    oDlg1:Activate(,,,.T.,,,)   
+
+Return
+
+Static Function fBloq(cCod,cLoja) //Função para bloquear os clientes
+
+    DbSelectArea("SA1")
+    if !SA1->(DBSeek(xFilial("SA1")+cCod+cLoja)) //Procura o cliente e a loja que fora passados 
+        Alert("Cliente não encontrado!")
+    else
+        if SA1->A1_MSBLQL != '1'
+            RecLock("SA1", .F.) //Usa-se true, para inclusão e false para EDIÇÃO/ALTERAÇÃO
+                SA1->A1_MSBLQL := '1'
+            MsUnlock()
+            MsgInfo("O cliente de código " + cCod + " e loja " + cLoja + " foi BLOQUEADO com sucesso!")
+        else
+            Alert("O cliente de código " + cCod + " e loja " + cLoja + " já encontra-se BLOQUEADO!")
+        endif
+    endif
+
+Return
+
+Static Function fDesb(cCod,cLoja) //Função para desbloquear os clientes
+
+
+    DbSelectArea("SA1")
+    if !SA1->(DBSeek(xFilial("SA1")+cCod+cLoja)) //Procura o cliente e a loja que fora passados 
+        Alert("Cliente não encontrado!")
+    else
+        if SA1->A1_MSBLQL != '2'
+            RecLock("SA1", .F.) //Usa-se true, para inclusão e false para EDIÇÃO/ALTERAÇÃO
+                SA1->A1_MSBLQL := '2'
+            MsUnlock()
+            MsgInfo("O cliente de código " + cCod + " e loja " + cLoja + " foi DESBLOQUEADO com sucesso!")
+        else
+            Alert("O cliente de código " + cCod + " e loja " + cLoja + " já encontra-se DESBLOQUEADO!")
+        endif
+    endif
+
+Return
+

@@ -1,0 +1,136 @@
+#include 'TOTVS.CH'
+#include 'Protheus.ch'
+
+/*/{Protheus.doc} TGet
+Fonte dedicado ao estudo de elementos visuais em ADVPL
+@type function
+@version  
+@author Alysson Oliveira
+@since 09/07/2024
+@see https://tdn.totvs.com/display/tec/AdvPL
+@return variant, return_description
+/*/
+User Function elementosVisuais()
+
+    //Criação da tela de diálogo
+    Local oDlg := nil
+    oDlg       := TDialog():New(0,0,340,600,'TPanel - Elementos Visuais',,,,,CLR_BLACK,CLR_WHITE,,,.T.)
+    //Criação das TFolders
+    Local aFolder := {"Dados Pessoais", "Dados Acadêmicos", "Dados Profissionais"}
+    Local oFolder1
+    oFolder1      := TFolder():New( 0,0,aFolder,,oDlg,,,,.T.,,300,300) 
+
+    Local oSayNome, oSayEndereco,oSayNasc, oSayLinguagens, oSayCurso, oSaySemestre, oSayProfissinal
+    Local oGetNome, oGetEndereco, oGetNasc, oGetCurso, oMultiGet, oCombo1
+    Local oGroupSexo
+    Private nRadio := 1
+    Private cGetNome := Space(35), cGetEndereco := Space(40), dGetNasc := Date()
+    Private aItens := {'1 - Primeiro',' 2 - Segundo','3 - Terceiro', '4 - Quarto', '5 - Quinto', '6 - Sexto', '7 - Sétimo', '8 - Oitavo','9 - Nono','10 - Décimo'}
+    Private cOpcao :=  aItens[1] //Armazenar uma String para ser usada como ponto inicial no construtor da ComboBox
+    Private cGetCurso := Space(30)
+    Private aItensSexo := {"Feminino", "Masculino", "Outro"}
+    Private cMultiGet := "Faça uma breve resumo das suas experiências profissionais"
+    Private lCheck1 := .F., lCheck2 := .F., lCheck3 := .F., lCheck4 := .F., lCheck5 := .F.
+    Private oCheck1, oCheck2, oCheck3, oCheck4
+    Private aLinguagens := {}
+
+    //Criação do TFolder - Dados Pessoais
+    oSayNome := TSay():New(010,010,{||'Nome Completo'},oFolder1:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetNome := TGet():New(020,010,{|u|if(PCount()==0,cGetNome,cGetNome:=u)},oFolder1:aDialogs[1],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetNome,,,, )
+    
+    oSayEndereco := TSay():New(010,120,{||'Endereço'},oFolder1:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetEndereco := TGet():New(020,120,{|u|if(PCount()==0,cGetEndereco,cGetEndereco:=u)},oFolder1:aDialogs[1],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetEndereco,,,, )
+    
+    oGroupSexo := tGroup():New(040,010,80,60,"Sexo",oFolder1:aDialogs[1],CLR_BLUE,,.T.)
+    oRadio := TRadMenu():New (50,15,aItensSexo,,oGroupSexo,,,,,,,,38,12,,,,.T.)
+    oRadio:bSetGet := {|u|Iif (PCount()==0,nRadio,nRadio:=u)} //O bloco de código retorna a posição do Array selecionado
+    
+    oSayNasc := TSay():New(040,120,{||'Data de Nascimento'},oFolder1:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetNasc := TGet():New(050,120,{|u|if(PCount()==0,dGetNasc,dGetNasc:=u)},oFolder1:aDialogs[1],050,009,"@D",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"dGetNasc",,,,.T.)
+
+    //Criação da TFolder - Dados Acadêmicos   
+    oSayCurso := TSay():New(010,010,{||'Curso'},oFolder1:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetCurso := TGet():New(020,010,{|u|if(PCount()==0,cGetCurso,cGetCurso:=u)},oFolder1:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCurso,,,, )
+
+    oSaySemestre := TSay():New(010,0120,{||'Semestre'},oFolder1:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oCombo1 := TComboBox():New(020,120,{|u|if(PCount()>0,cOpcao:=u,cOpcao)},aItens,60,20,oFolder1:aDialogs[2],,,,,,.T.,,,,,,,,,'cOpcao')
+    
+    oSayLinguagens  := TSay():New(040,010,{||'Linguagens de Programação'},oFolder1:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oCheck1 := TCheckBox():New(050,010,'ADVPL / TL++',{|| lCheck1},oFolder1:aDialogs[2],100,210,,{|| lCheck1 := !lCheck1, FArmazenarCheckBox(lCheck1, "ADVPL")},,,,,,.T.,,,)
+    oCheck2 := TCheckBox():New(060,010,'Python',{|| lCheck2},oFolder1:aDialogs[2],100,210,,{|| lCheck2 := !lCheck2,  FArmazenarCheckBox(lCheck2, "Python")},,,,,,.T.,,,)
+    oCheck3 := TCheckBox():New(070,010,'C++',{|| lCheck3},oFolder1:aDialogs[2],100,210,,{|| lCheck3 := !lCheck3, FArmazenarCheckBox(lCheck3, "C++")},,,,,,.T.,,,)
+    oCheck4 := TCheckBox():New(080,010,'JavaScript',{|| lCheck4},oFolder1:aDialogs[2],100,210,,{|| lCheck4 := !lCheck4, FArmazenarCheckBox(lCheck4, "JavaScript")},,,,,,.T.,,,)
+    
+    oButtonAvancar := TButton():New( 120, 010, "AVANÇAR",oDlg,{|| FProximaAba(OFolder1)}, 40,15,,,.F.,.T.,.F.,,.F.,,,.F. ) 
+    oButtonEnviar := TButton():New( 108, 60, "ENVIAR",oFolder1:aDialogs[3],{|| FExibirDados()}, 40,15,,,.F.,.T.,.F.,,.F.,,,.F. ) 
+
+
+    //Criação da TFolder - Dados Profissionais
+    oSayProfissinal := TSay():New(010,010,{||'Experiências Profissinais'},oFolder1:aDialogs[3],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oMultiget := tMultiget():new( 020, 010, {| u | if( pCount() > 0, cMultiGet := u, cMultiGet ) }, ;
+    oFolder1:aDialogs[3], 280, 70, , , , , , .T. )
+
+    oDlg:Activate(,,,.T.,,,)
+
+Return
+
+//Função para avançar para próxima folder (não encontrei nenhuma do Protheus então criei esta :D)
+Static Function FProximaAba(Folder)
+
+    Folder:ShowPage(Folder:nOption+1)
+
+Return
+
+//Função que armazena/remove os valores dos checkbox em uma Array
+Static Function FArmazenarCheckBox(lCheck, cCheck)
+
+    nPosicao := aScanx(aLinguagens, cCheck) //Retorna a posição que o valor está, caso não tenha retorna 0
+
+    if(lCheck == .T.)       
+        if( nPosicao == 0)
+            aAdd(aLinguagens, cCheck)
+        endif
+    else
+        if( nPosicao != 0)
+            aDel(aLinguagens, nPosicao) //Dimina um elemento do array e "arrasta" os demais para trás tornando nulo o último elemento
+            ASize( aLinguagens, len(aLinguagens)-1) //Redimensiona o tamanho do Array removendo o valor nulo gerado pela função aDel()
+        endif
+    endif
+
+Return
+
+//Função para exibir dados inseridos na tela
+Static Function FExibirDados()
+
+    if (Empty(cGetNome) .OR. Empty(cGetEndereco) .OR. Empty(dGetNasc) .OR. Empty(cGetCurso))
+        Alert("PREENCHA TODOS OS DADOS!")
+    else
+        MsgInfo("Nome: " + cGetNome + Chr(13) + "Endereço: " + cGetEndereco + Chr(13) + "Sexo: " + aItensSexo[nRadio] + Chr(13) + "Nascimento: " + cValtochar(dGetNasc) + Chr(13) +;
+        "Curso: " + cGetCurso + Chr(13) + "Semestre: " + cOpcao + Chr(13) + "Linguagens: " + FConcatenarArray(aLinguagens),;
+         "Dados Inseridos")
+    endif
+
+Return
+
+//Função para Concatenar elementos do array e retorná-los como uma String
+Static Function FConcatenarArray(aArray)
+    Local i
+    cLinguagens := ""
+
+    if len(aArray) > 0
+        // Percorre o array aLinguagens para concatenar os elementos
+        FOR i := 1 TO Len(aLinguagens)
+            cLinguagens += CValtoChar(aLinguagens[i])
+            IF i < Len(aLinguagens)
+                cLinguagens += ", "  // Adiciona vírgula entre os elementos
+            ENDIF
+        NEXT
+    else
+        cLinguagens := "Nenhuma"
+    endif
+
+Return cLinguagens
+
+
+
+
