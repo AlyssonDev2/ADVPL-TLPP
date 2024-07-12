@@ -1,0 +1,57 @@
+#include "Totvs.ch"
+#include "Protheus.ch"
+
+User Function Projeto01()
+    //Variaveis Folders e Dialog
+    Private oDlg1
+    Private oFolder := {}
+    Private aFolder 
+    Private cTituloJanela := "Cadastro de Aluno"
+
+
+    //Variaveis Folder1(Dados Pessoais)
+    Private oSayNome, oSayNasc, oSayCPF, oSaySexo,oSayDDD, oSayTelefone, oSayEnsino
+    Private oGetNome , oGetNasc, oGetCPF, oGroupSexo, oRadioSexo, oGetDDD, oGetTelefone, oComboEnsino
+    Private aItensSexo := {"Masculino", "Feminino", "Outro"}
+    Private aItensEnsino := {"1º Ano - Fundamental", "2º Ano - Fundamental", "3º Ano - Fundamental", "4º Ano - Fundamental", "5º Ano - Fundamental","6º Ano - Fundamental",;
+    "7º Ano - Fundamental", "8º Ano - Fundamental", "9º Ano - Fundamental", "1º Ano - Médio", "2º Ano - Médio", "3º Ano - Médio"}
+    Private cGetNome := Space(30), dGetNasc := Date(), nGetCPF := Space(9), nRadioSexo := 1, nGetDDD := Space(2),;
+    nGetTelefone := Space(9), cOpcaoEnsino := [1]
+    //Variáveis Folder2(Endereço)
+    //Variáveis Folder1(Outros)
+
+    //Elementos Visuais Folders e Dialog
+    oDlg1 := MSDialog():New( 0,0,680,1000,cTituloJanela,,,.F.,,,,,,.T.,,,.T. )
+    aFolder := {"Dados Pessoais", "Endereco", "Outros"}
+    oFolder := TFolder():New( 0,0,aFolder,,oDlg1,,,,.T.,,502,200) 
+
+    //Elementos Folder1(Dados Pessoais)
+    oSayNome     := TSay():New(010,010,{||'Nome Completo'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetNome     := TGet():New(020,010,{|u|if(PCount()==0,cGetNome,cGetNome:=u)},oFolder:aDialogs[1],096,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetNome,,,, )
+    
+    oSayNasc     := TSay():New(010,120,{||'Data de Nascimento'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetNasc     := TGet():New(020,120,{|u|if(PCount()==0,dGetNasc,dGetNasc:=u)},oFolder:aDialogs[1],050,009,"@D",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"dGetNasc",,,,.T.)
+    
+    oSayCPF      := TSay():New(010,185,{||'CPF'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetCPF      := TGet():New(020,185,{|u|if(PCount()==0,nGetCPF,nGetCPF:=u)},oFolder:aDialogs[1],050,009,"@R 999.999.999-99",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetCPF",,,,.T.)
+    
+    oSayDDD      := TSay():New(010,250,{||'DDD'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,10)
+    oGetDDD      := TGet():New(020,250,{|u|if(PCount()==0,nGetDDD,nGetDDD:=u)},oFolder:aDialogs[1],04,009,"@E (99)",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetDDD",,,,.T.)
+   
+    oSayTelefone := TSay():New(010,290,{||'Telefone'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,10)
+    oGetTelefone := TGet():New(020,290,{|u|if(PCount()==0,nGetTelefone,nGetTelefone:=u)},oFolder:aDialogs[1],40,009,"@E 9-9999-9999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetTelefone",,,,.T.)
+    
+    oGroupSexo   := tGroup():New(040,010,80,60,"Sexo",oFolder:aDialogs[1],CLR_BLUE,,.T.)
+    oRadioSexo   := TRadMenu():New (50,15,aItensSexo,,oGroupSexo,,,,,,,,38,12,,,,.T.)
+    oRadioSexo:bSetGet := {|u|Iif (PCount()==0,nRadioSexo,nRadioSexo:=u)} //O bloco de código retorna a posição do Array selecionado
+
+    oSayEnsino   := TSay():New(040,80,{||'Serie'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oComboEnsino := TComboBox():New(050,80,{|u|if(PCount()>0,cOpcaoEnsino:=u,cOpcaoEnsino)},;
+        aItensEnsino,90,20,oFolder:aDialogs[1],,;
+        ,,,,.T.,,,,,,,,,'cOpcaoEnsino')
+    
+    //Elementos Folder2(Endereço)
+    //Elementos Folder3(Outros)
+
+    oDlg1:Activate(,,,.T.)
+return
