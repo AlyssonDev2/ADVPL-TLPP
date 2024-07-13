@@ -17,7 +17,14 @@ User Function Projeto01()
     "7º Ano - Fundamental", "8º Ano - Fundamental", "9º Ano - Fundamental", "1º Ano - Médio", "2º Ano - Médio", "3º Ano - Médio"}
     Private cGetNome := Space(30), dGetNasc := Date(), nGetCPF := Space(9), nRadioSexo := 1, nGetDDD := Space(2),;
     nGetTelefone := Space(9), cOpcaoEnsino := [1]
+    
     //Variáveis Folder2(Endereço)
+    Private oSayEndereco, oSayBairro, oSayCep, oSayEstado, oSayCidade, oComboEstado
+    Private oGetEndereco, oGetBairro, oGetCep, oGetCidade
+    Private cGetEndereco := Space(35), cGetBairro := Space(20), cGetCep := Space(8), cGetCidade := Space(20)
+    Private cOpcaoEstado[1]
+    Private aItensEstado := {'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',;
+    'PA', 'PB', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'}
     //Variáveis Folder1(Outros)
 
     //Elementos Visuais Folders e Dialog
@@ -51,6 +58,23 @@ User Function Projeto01()
         ,,,,.T.,,,,,,,,,'cOpcaoEnsino')
     
     //Elementos Folder2(Endereço)
+    oSayEndereco := TSay():New(010,010,{||'Endereço'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetEndereco := TGet():New(020,010,{|u|if(PCount()==0,cGetEndereco,cGetEndereco:=u)},oFolder:aDialogs[2],096,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetEndereco,,,, )
+ 
+    oSayBairro := TSay():New(010,120,{||'Bairro'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetBairro := TGet():New(020,120,{|u|if(PCount()==0,cGetBairro,cGetBairro:=u)},oFolder:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetBairro,,,, )
+ 
+    oSayCep := TSay():New(010,210,{||'Cep'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetCep := TGet():New(020,210,{|u|if(PCount()==0,cGetCep,cGetCep:=u)},oFolder:aDialogs[2],030,009,"@R 99999-999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCep,,,, )
+ 
+    oSayEstado   := TSay():New(040,010,{||'Estado'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oComboEstado := TComboBox():New(050,010,{|u|if(PCount()>0,cOpcaoEstado:=u,cOpcaoEstado)},;
+        aItensEstado,30,10,oFolder:aDialogs[2],,;
+        ,,,,.T.,,,,,,,,,'cOpcaoEstado')
+    
+    oSayCidade := TSay():New(040,050,{||'Cidade'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oGetCidade := TGet():New(050,050,{|u|if(PCount()==0,cGetCidade,cGetCidade:=u)},oFolder:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCidade,,,, )
+
     //Elementos Folder3(Outros)
 
     oDlg1:Activate(,,,.T.)
