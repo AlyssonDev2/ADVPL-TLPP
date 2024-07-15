@@ -105,7 +105,7 @@ User Function Projeto01()
         {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapExcluir:lAutoSize := .T.
     oBitmapSair := TBitmap():New(220,270,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Sair.bmp",.T.,oDlg1,;
-        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+        {|| oDlg1:End()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapSair:lAutoSize := .T.
 
 
@@ -113,7 +113,7 @@ User Function Projeto01()
     oButtonAlterar    := TButton():New(250, 80, "Alterar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonExcluir   := TButton():New(250, 200, "Excluir", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
-    oButtonSair   := TButton():New(250, 260, "Sair", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonSair   := TButton():New(250, 260, "Sair", oDlg1,{|| oDlg1:End()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
 
     oDlg1:Activate(,,,.T.)
 return
