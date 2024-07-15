@@ -1,4 +1,4 @@
-#include "Totvs.ch"
+﻿#include "Totvs.ch"
 #include "Protheus.ch"
 
 User Function Projeto01()
@@ -25,10 +25,15 @@ User Function Projeto01()
     Private cOpcaoEstado[1]
     Private aItensEstado := {'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',;
     'PA', 'PB', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'}
-    //Variáveis Folder1(Outros)
+    
+    //Variáveis Folder3(Outros)
+    Private oGroupCursos, oCheck1, oCheck2, oCheck3, oCheck4, oCheck5, oMultigetObs, oSayObs
+    Private lCheck1   := .F., lCheck2 := .F., lCheck3 := .F., lCheck4 := .F., lCheck5 := .F.
+    Private cMultiGet := "Observações adicionais sobre o aluno."
+
 
     //Elementos Visuais Folders e Dialog
-    oDlg1 := MSDialog():New( 0,0,680,1000,cTituloJanela,,,.F.,,,,,,.T.,,,.T. )
+    oDlg1 := MSDialog():New( 0,0,680,1000,cTituloJanela,,,.F.,,,RGB(250, 250, 250),,,.T.,,,.T. )
     aFolder := {"Dados Pessoais", "Endereco", "Outros"}
     oFolder := TFolder():New( 0,0,aFolder,,oDlg1,,,,.T.,,502,200) 
 
@@ -76,6 +81,39 @@ User Function Projeto01()
     oGetCidade := TGet():New(050,050,{|u|if(PCount()==0,cGetCidade,cGetCidade:=u)},oFolder:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCidade,,,, )
 
     //Elementos Folder3(Outros)
+    oGroupCursos   := tGroup():New(010,010,80,64,"Cursos",oFolder:aDialogs[3],CLR_BLUE,,.T.)
+    oCheck5        := TCheckBox():New(022,017,'Todos',{|| lCheck5},oGroupCursos,100,210,,{|| lCheck5 := !lCheck5, fMarcarTodos(lCheck5)},,,,,,.T.,,,)
+    oCheck1        := TCheckBox():New(032,017,'Informática',{|| lCheck1},oGroupCursos,100,210,,{|| lCheck1 := !lCheck1},,,,,,.T.,,,)
+    oCheck2        := TCheckBox():New(042,017,'Teatro',{|| lCheck2},oGroupCursos,100,210,,{|| lCheck2 := !lCheck2},,,,,,.T.,,,)
+    oCheck3        := TCheckBox():New(052,017,'Inglês',{|| lCheck3},oGroupCursos,100,210,,{|| lCheck3 := !lCheck3},,,,,,.T.,,,)
+    oCheck4        := TCheckBox():New(062,017,'Libras',{|| lCheck4},oGroupCursos,100,210,,{|| lCheck4 := !lCheck4},,,,,,.T.,,,)
+    oSayObs        := TSay():New(010,094,{||'Observações'},oFolder:aDialogs[3],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
+    oMultigetObs   := tMultiget():new( 020, 094, {| u | if( pCount() > 0, cMultiGet := u, cMultiGet ) }, ;
+    oFolder:aDialogs[3], 240, 60, , , , , , .T. )
 
     oDlg1:Activate(,,,.T.)
 return
+Static Function fMarcarTodos(lCheck)
+
+    if lCheck
+        lCheck1 := .T.
+        lCheck2 := .T.
+        lCheck3 := .T.
+        lCheck4 := .T.
+
+        nCount := 4
+    else
+        lCheck1 := .F.
+        lCheck2 := .F.
+        lCheck3 := .F.
+        lCheck4 := .F.
+
+        nCount := 0
+    endif
+
+    oCheck1:Refresh()
+    oCheck2:Refresh()
+    oCheck3:Refresh()
+    oCheck4:Refresh()
+
+Return
