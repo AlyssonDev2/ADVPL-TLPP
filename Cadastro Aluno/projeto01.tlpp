@@ -4,6 +4,7 @@
 User Function Projeto01()
     //Variaveis Folders e Dialog
     Private oDlg1
+    Private oButtonAlterar, oButtonConsultar, oButtonExcluir, oButtonIncluir, oButtonSair
     Private oFolder := {}
     Private aFolder 
     Private cTituloJanela := "Cadastro de Aluno"
@@ -90,6 +91,29 @@ User Function Projeto01()
     oSayObs        := TSay():New(010,094,{||'Observações'},oFolder:aDialogs[3],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oMultigetObs   := tMultiget():new( 020, 094, {| u | if( pCount() > 0, cMultiGet := u, cMultiGet ) }, ;
     oFolder:aDialogs[3], 240, 60, , , , , , .T. )
+
+    oBitmapIncluir := TBitmap():New(220,030,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\incluir.bmp",.T.,oDlg1,;
+        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+    oBitmapIncluir:lAutoSize := .T.
+    oBitmapAlterar := TBitmap():New(220,090,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Alterar.bmp",.T.,oDlg1,;
+        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+    oBitmapAlterar:lAutoSize := .T.
+    oBitmapConsultar := TBitmap():New(220,150,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Consultar.bmp",.T.,oDlg1,;
+        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+    oBitmapConsultar:lAutoSize := .T.
+    oBitmapExcluir := TBitmap():New(220,210,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Excluir.bmp",.T.,oDlg1,;
+        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+    oBitmapExcluir:lAutoSize := .T.
+    oBitmapSair := TBitmap():New(220,270,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Sair.bmp",.T.,oDlg1,;
+        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+    oBitmapSair:lAutoSize := .T.
+
+
+    oButtonIncluir   := TButton():New(250, 20, "Incluir", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonAlterar    := TButton():New(250, 80, "Alterar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonExcluir   := TButton():New(250, 200, "Excluir", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonSair   := TButton():New(250, 260, "Sair", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
 
     oDlg1:Activate(,,,.T.)
 return
