@@ -12,10 +12,10 @@ Fonte dedicado ao estudo de elementos visuais em ADVPL
 /*/
 User Function elementosVisuais()
 
-    //Criação da tela de diálogo
+    //CriaÃ§Ã£o da tela de diálogo
     Local oDlg := nil
     oDlg       := TDialog():New(0,0,340,600,'TPanel - Elementos Visuais',,,,,CLR_BLACK,CLR_WHITE,,,.T.)
-    //Criação das TFolders
+    //CriaÃ§Ã£o das TFolders
     Local aFolder := {"Dados Pessoais", "Dados Acadêmicos", "Dados Profissionais"}
     Local oFolder1
     oFolder1      := TFolder():New( 0,0,aFolder,,oDlg,,,,.T.,,300,300) 
@@ -25,7 +25,7 @@ User Function elementosVisuais()
     Local oGroupSexo
     Private nRadio := 1
     Private cGetNome := Space(35), cGetEndereco := Space(40), dGetNasc := Date()
-    Private aItens := {'1 - Primeiro',' 2 - Segundo','3 - Terceiro', '4 - Quarto', '5 - Quinto', '6 - Sexto', '7 - Sétimo', '8 - Oitavo','9 - Nono','10 - Décimo'}
+    Private aItens := {'1 - Primeiro',' 2 - Segundo','3 - Terceiro', '4 - Quarto', '5 - Quinto', '6 - Sexto', '7 - SÃ©timo', '8 - Oitavo','9 - Nono','10 - Dï¿½cimo'}
     Private cOpcao :=  aItens[1] //Armazenar uma String para ser usada como ponto inicial no construtor da ComboBox
     Private cGetCurso := Space(30)
     Private aItensSexo := {"Feminino", "Masculino", "Outro"}
@@ -34,7 +34,7 @@ User Function elementosVisuais()
     Private oCheck1, oCheck2, oCheck3, oCheck4
     Private aLinguagens := {}
 
-    //Criação do TFolder - Dados Pessoais
+    //CriaÃ§Ã£o do TFolder - Dados Pessoais
     oSayNome := TSay():New(010,010,{||'Nome Completo'},oFolder1:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetNome := TGet():New(020,010,{|u|if(PCount()==0,cGetNome,cGetNome:=u)},oFolder1:aDialogs[1],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetNome,,,, )
     
@@ -48,7 +48,7 @@ User Function elementosVisuais()
     oSayNasc := TSay():New(040,120,{||'Data de Nascimento'},oFolder1:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetNasc := TGet():New(050,120,{|u|if(PCount()==0,dGetNasc,dGetNasc:=u)},oFolder1:aDialogs[1],050,009,"@D",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"dGetNasc",,,,.T.)
 
-    //Criação da TFolder - Dados Acadêmicos   
+    //CriaÃ§Ã£o da TFolder - Dados Acadêmicos   
     oSayCurso := TSay():New(010,010,{||'Curso'},oFolder1:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetCurso := TGet():New(020,010,{|u|if(PCount()==0,cGetCurso,cGetCurso:=u)},oFolder1:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCurso,,,, )
 
@@ -65,7 +65,7 @@ User Function elementosVisuais()
     oButtonEnviar := TButton():New( 108, 60, "ENVIAR",oFolder1:aDialogs[3],{|| FExibirDados()}, 40,15,,,.F.,.T.,.F.,,.F.,,,.F. ) 
 
 
-    //Criação da TFolder - Dados Profissionais
+    //CriaÃ§Ã£o da TFolder - Dados Profissionais
     oSayProfissinal := TSay():New(010,010,{||'Experiências Profissinais'},oFolder1:aDialogs[3],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oMultiget := tMultiget():new( 020, 010, {| u | if( pCount() > 0, cMultiGet := u, cMultiGet ) }, ;
     oFolder1:aDialogs[3], 280, 70, , , , , , .T. )
@@ -84,7 +84,7 @@ Return
 //Função que armazena/remove os valores dos checkbox em uma Array
 Static Function FArmazenarCheckBox(lCheck, cCheck)
 
-    nPosicao := aScanx(aLinguagens, cCheck) //Retorna a posição que o valor está, caso não tenha retorna 0
+    nPosicao := aScanx(aLinguagens, cCheck) //Retorna a posição que o valor estão, caso não tenha retorna 0
 
     if(lCheck == .T.)       
         if( nPosicao == 0)
@@ -93,7 +93,7 @@ Static Function FArmazenarCheckBox(lCheck, cCheck)
     else
         if( nPosicao != 0)
             aDel(aLinguagens, nPosicao) //Dimina um elemento do array e "arrasta" os demais para trás tornando nulo o último elemento
-            ASize( aLinguagens, len(aLinguagens)-1) //Redimensiona o tamanho do Array removendo o valor nulo gerado pela função aDel()
+            ASize( aLinguagens, len(aLinguagens)-1) //Redimensiona o tamanho do Array removendo o valor nulo gerado pela Função aDel()
         endif
     endif
 
@@ -122,7 +122,7 @@ Static Function FConcatenarArray(aArray)
         FOR i := 1 TO Len(aLinguagens)
             cLinguagens += CValtoChar(aLinguagens[i])
             IF i < Len(aLinguagens)
-                cLinguagens += ", "  // Adiciona vírgula entre os elementos
+                cLinguagens += ", "  // Adiciona ví­rgula entre os elementos
             ENDIF
         NEXT
     else

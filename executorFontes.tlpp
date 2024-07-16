@@ -1,7 +1,7 @@
 #INCLUDE 'PROTHEUS.CH'
 #INCLUDE 'RWMAKE.CH'
 #INCLUDE 'FONT.CH' //Include responsável pelas fontes coloridas utilizadas no Texto, e com diversos estilos
-#INCLUDE 'COLORS.CH' //Responsável pelas cores
+#INCLUDE 'COLORS.CH' //responsável pelas cores
 
 User Function FonteExec()
 
@@ -16,7 +16,7 @@ oFont2     := TFont():New( "Arial Narrow",0,-16,,.F.,0,,400,.F.,.F.,,,,,, )
 
 oDlg1      := MSDialog():New( 0,0,270,480,"Executor de Rotinas",,,.F.,,,,,,.T.,,,.T. )
 
-oSay1      := TSay():New( 032,008,{||"Digite o seu fonte seguido dos pareteses()"},oDlg1,,oFont1,.F.,.F.,.F.,.T.,CLR_BLUE,CLR_WHITE,400,016)
+oSay1      := TSay():New( 032,008,{||"Digite o seu fonte seguido dos parêteses()"},oDlg1,,oFont1,.F.,.F.,.F.,.T.,CLR_BLUE,CLR_WHITE,400,016)
 
 oGet1      := TGet():New( 052,008,{|u| If(PCount()>0,cNomeFun:=u,cNomeFun)},oDlg1,212,013,'',,CLR_BLACK,CLR_WHITE,oFont1,,,.T.,"",,,.F.,.F.,,.F.,.F.,"","cNomeFun",,)
 
