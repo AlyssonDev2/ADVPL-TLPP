@@ -3,33 +3,32 @@
 
 User Function Projeto01()
     //Variaveis Folders e Dialog
-    Local cGetCodigo := GerarCodigo()
     Private oDlg1
-    Private oButtonAlterar, oButtonConsultar, oButtonExcluir, oButtonIncluir, oButtonSair
+    Private oButtonAlterar, oButtonConsultar, oButtonExcluir, oButtonIncluir, oButtonSair, oButtonAvancar
     Private oFolder := {}
     Private aFolder 
     Private cTituloJanela := "Cadastro de Aluno"
 
     
-    //Variaveis Folder1(Dados Pessoais)
+    //Variáveis Folder1(Dados Pessoais)
     Private oSayNome, oSayNasc, oSayCPF, oSaySexo,oSayDDD, oSayTelefone, oSayEnsino, oSayCodigo
     Private oGetNome , oGetNasc, oGetCPF, oGroupSexo, oRadioSexo, oGetDDD, oGetTelefone, oComboEnsino, oGetCodigo
     Private aItensSexo := {"Masculino", "Feminino", "Outro"}
     Private aItensEnsino := {"1º Ano - Fundamental", "2º Ano - Fundamental", "3º Ano - Fundamental", "4º Ano - Fundamental", "5º Ano - Fundamental","6º Ano - Fundamental",;
     "7º Ano - Fundamental", "8º Ano - Fundamental", "9º Ano - Fundamental", "1º Ano - Médio", "2º  Ano - médio", "3º Ano - médio"}
-    Private cGetNome := Space(30), dGetNasc := Date(), nGetCPF := Space(9), nRadioSexo := 1, nGetDDD := Space(2),;
-    nGetTelefone := Space(9), cOpcaoEnsino := [1]
+    Private cGetNome := Space(30), dGetNasc := Date(), cGetCPF := Space(11), nRadioSexo := 1, cGetDDD := Space(2),;
+    cGetNumero := Space(9), cOpcaoEnsino := aItensEnsino[1], cGetCodigo := Space(6)
     
     
-    //VariÃ¡veis Folder2(Endereço)
+    //Variáveis Folder2(Endereço)
     Private oSayEndereco, oSayBairro, oSayCep, oSayEstado, oSayCidade, oComboEstado
     Private oGetEndereco, oGetBairro, oGetCep, oGetCidade
     Private cGetEndereco := Space(35), cGetBairro := Space(20), cGetCep := Space(8), cGetCidade := Space(20)
-    Private cOpcaoEstado[1]
     Private aItensEstado := {'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',;
     'PA', 'PB', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'}
+    Private nOpcaoEstado := aItensEstado[1]
     
-    //VariÃ¡veis Folder3(Outros)
+    //Variáveis Folder3(Outros)
     Private oGroupCursos, oCheck1, oCheck2, oCheck3, oCheck4, oCheck5, oMultigetObs, oSayObs
     Private lCheck1   := .F., lCheck2 := .F., lCheck3 := .F., lCheck4 := .F., lCheck5 := .F.
     Private cMultiGet := "Observações adicionais sobre o aluno."
@@ -39,11 +38,12 @@ User Function Projeto01()
     oDlg1 := MSDialog():New( 0,0,680,1000,cTituloJanela,,,.F.,,,RGB(250, 250, 250),,,.T.,,,.T. )
     aFolder := {"Dados Pessoais", "Endereço", "Outros"}
     oFolder := TFolder():New( 0,0,aFolder,,oDlg1,,,,.T.,,502,200) 
+    obuttonAvancar := TButton():New(120, 10, "Avançar", oDlg1,{|| ProximaAba()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
 
     //Elementos Folder1(Dados Pessoais)
     oSayCodigo     := TSay():New(010,010,{||'Código'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
-    oGetCodigo     := TGet():New(020,010,{|u|if(PCount()==0,cGetCodigo,cGetCodigo:=u)},oFolder:aDialogs[1],050,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCodigo,,,, )
-    oGetCodigo:Disable()
+    oGetCodigo     := TGet():New(020,010,{|u|if(PCount()==0,cGetCodigo,cGetCodigo:=u)},oFolder:aDialogs[1],050,009,"@999999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCodigo,,,,.T. )
+    oGetCodigo:cF3 := "SZ2"
     
     oSayNome     := TSay():New(010,070,{||'Nome Completo'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetNome     := TGet():New(020,070,{|u|if(PCount()==0,cGetNome,cGetNome:=u)},oFolder:aDialogs[1],096,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetNome,,,, )
@@ -52,13 +52,13 @@ User Function Projeto01()
     oGetNasc     := TGet():New(020,180,{|u|if(PCount()==0,dGetNasc,dGetNasc:=u)},oFolder:aDialogs[1],050,009,"@D",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"dGetNasc",,,,.T.)
     
     oSayCPF      := TSay():New(010,240,{||'CPF'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
-    oGetCPF      := TGet():New(020,240,{|u|if(PCount()==0,nGetCPF,nGetCPF:=u)},oFolder:aDialogs[1],050,009,"@R 999.999.999-99",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetCPF",,,,.T.)
+    oGetCPF      := TGet():New(020,240,{|u|if(PCount()==0,cGetCPF,cGetCPF:=u)},oFolder:aDialogs[1],050,009,"@R 999.999.999-99",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"cGetCPF",,,,.T.)
     
     oSayDDD      := TSay():New(010,305,{||'DDD'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,10)
-    oGetDDD      := TGet():New(020,305,{|u|if(PCount()==0,nGetDDD,nGetDDD:=u)},oFolder:aDialogs[1],04,009,"@E (99)",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetDDD",,,,.T.)
+    oGetDDD      := TGet():New(020,305,{|u|if(PCount()==0,cGetDDD,cGetDDD:=u)},oFolder:aDialogs[1],04,009,"@R (99)",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"cGetDDD",,,,.T.)
    
     oSayTelefone := TSay():New(010,335,{||'Telefone'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,10)
-    oGetTelefone := TGet():New(020,335,{|u|if(PCount()==0,nGetTelefone,nGetTelefone:=u)},oFolder:aDialogs[1],40,009,"@E 9-9999-9999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"nGetTelefone",,,,.T.)
+    oGetTelefone := TGet():New(020,335,{|u|if(PCount()==0,cGetNumero,cGetNumero:=u)},oFolder:aDialogs[1],40,009,"@R 9 9999-9999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,"cGetNumero",,,,.T.)
     
     oGroupSexo   := tGroup():New(040,010,80,60,"Sexo",oFolder:aDialogs[1],CLR_BLUE,,.T.)
     oRadioSexo   := TRadMenu():New (50,15,aItensSexo,,oGroupSexo,,,,,,,,38,12,,,,.T.)
@@ -80,9 +80,9 @@ User Function Projeto01()
     oGetCep := TGet():New(020,210,{|u|if(PCount()==0,cGetCep,cGetCep:=u)},oFolder:aDialogs[2],030,009,"@R 99999-999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCep,,,, )
  
     oSayEstado   := TSay():New(040,010,{||'Estado'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
-    oComboEstado := TComboBox():New(050,010,{|u|if(PCount()>0,cOpcaoEstado:=u,cOpcaoEstado)},;
+    oComboEstado := TComboBox():New(050,010,{|u|if(PCount()>0,nOpcaoEstado:=u,nOpcaoEstado)},;
         aItensEstado,30,10,oFolder:aDialogs[2],,;
-        ,,,,.T.,,,,,,,,,'cOpcaoEstado')
+        ,,,,.T.,,,,,,,,,'nOpcaoEstado')
     
     oSayCidade := TSay():New(040,050,{||'Cidade'},oFolder:aDialogs[2],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetCidade := TGet():New(050,050,{|u|if(PCount()==0,cGetCidade,cGetCidade:=u)},oFolder:aDialogs[2],080,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCidade,,,, )
@@ -99,7 +99,7 @@ User Function Projeto01()
     oFolder:aDialogs[3], 240, 60, , , , , , .T. )
 
     oBitmapIncluir := TBitmap():New(220,030,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\incluir.bmp",.T.,oDlg1,;
-        {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
+        {||IncluirSZ2()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapIncluir:lAutoSize := .T.
     oBitmapAlterar := TBitmap():New(220,090,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Alterar.bmp",.T.,oDlg1,;
         {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
@@ -114,62 +114,87 @@ User Function Projeto01()
         {|| oDlg1:End()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapSair:lAutoSize := .T.
 
-
-    oButtonIncluir   := TButton():New(250, 20, "Incluir", oDlg1,{|| GerarCodigo()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonIncluir   := TButton():New(250, 20, "Incluir", oDlg1,{|| IncluirSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonAlterar    := TButton():New(250, 80, "Alterar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
-    oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| ConsultarSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonExcluir   := TButton():New(250, 200, "Excluir", oDlg1,{|| }, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonSair   := TButton():New(250, 260, "Sair", oDlg1,{|| oDlg1:End()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
 
     oDlg1:Activate(,,,.T.)
 return
-/*
+
+//Função para inclusão dos dados
 Static Function IncluirSZ2()
 
     DBSelectArea("SZ2")
     RecLock("SZ2", .T.)
         //Dados Pessoais
         SZ2->Z2_FILIAL := xFilial("SZ2")
-        SZ2->Z2_COD    := GetSxeNum("SA1","A1_COD") 
+        SZ2->Z2_COD    := cGetCodigo
         SZ2->Z2_NOME   := cGetNome
-        SZ2->Z2_NASC
-        SZ2->Z2_DDD
-        SZ2->Z2_CEL
-        SZ2->Z2_COF
-        SZ2->Z2_SERIE
+        SZ2->Z2_NASC   := dGetNasc
+        SZ2->Z2_SEXO   := cValtoChar(nRadioSexo) //1 para Masculino e 2 para feminino
+        SZ2->Z2_DDD    := cGetDDD
+        SZ2->Z2_CEL    := cGetNumero
+        SZ2->Z2_CPF    := cGetCPF
+        SZ2->Z2_SERIE  := cOpcaoEnsino
         
         //Endereço
-        SZ2->Z2_END
-        SZ2->Z2_BAIRRO
-        SZ2->Z2_CEP
-        SZ2->Z2_CIDADE
-        SZ2->Z2_ESTADO
-        
+        SZ2->Z2_END     := cGetEndereco
+        SZ2->Z2_BAIRRO  := cGetBairro
+        SZ2->Z2_CEP     := cGetCep
+        SZ2->Z2_CIDADE  := cGetCidade
+        SZ2->Z2_ESTADO  := nOpcaoEstado
+
         //Informações adicionais
-        SZ2->Z2_INFO
-        SZ2->Z2_TEATRO
-        SZ2->Z2_INGLES
-        SZ2->Z2_LIBRAS
-        SZ2->Z2_OBS 
+        SZ2->Z2_INF     := IIF(lCheck1, "1","2") //1 para sim e 2 para não
+        SZ2->Z2_TEATRO  := IIF(lCheck2, "1","2") //1 para sim e 2 para não
+        SZ2->Z2_INGLES  := IIF(lCheck3, "1","2") //1 para sim e 2 para não
+        SZ2->Z2_LIBRAS  := IIF(lCheck4, "1","2") //1 para sim e 2 para não
+        SZ2->Z2_OBS     := cMultiGet
     MsUnlock()
     DbCloseArea()
 
+    MsgInfo("Aluno incluido com sucesso!", "SUCESSO")
+
 return
-*/
-Static Function GerarCodigo()
 
-    Local cCodigo
+//Função para consultar e pegar dados da tabela SZ2
+Static Function ConsultarSZ2()
     DBSelectArea("SZ2")
-    DBGOTO(1)
-    DO WHILE !EOF()
-        cCodigo := SZ2->Z2_COD
-        DBSKIP()
-    ENDDO
-        nCodigo := Val(cCodigo)
-        nCodigoConvertido := REPLICATE("0", 6-len(cValtoChar(nCodigo)))+cValtoChar(ncodigo+1)
-    DbCloseArea()
+    DBSetOrder(1)
+    IF DBSeek(xFilial("SZ2")+cGetCodigo)
+        //Dados Pessoais
+        cGetNome       := SZ2->Z2_NOME
+        dGetNasc       := SZ2->Z2_NASC
+        nRadioSexo     := Val(SZ2->Z2_SEXO) //1 para Masculino e 2 para feminino
+        cGetDDD        := SZ2->Z2_DDD
+        cGetNumero     := SZ2->Z2_CEL 
+        cGetCPF        := SZ2->Z2_CPF 
+        cOpcaoEnsino   := SZ2->Z2_SERIE
+        
+        //Endereço
+        cGetEndereco := SZ2->Z2_END     
+        cGetBairro   := SZ2->Z2_BAIRRO  
+        cGetCep      := SZ2->Z2_CEP     
+        cGetCidade   := SZ2->Z2_CIDADE  
+        nOpcaoEstado := SZ2->Z2_ESTADO  
 
-Return nCodigoConvertido
+        //Informações adicionais
+        lCheck1   := IIF(SZ2->Z2_INF == "1", .T.,.F.)       
+        lCheck2   := IIF(SZ2->Z2_TEATRO == "1", .T.,.F.)  
+        lCheck3   := IIF(SZ2->Z2_INGLES == "1", .T.,.F.) 
+        lCheck4   := IIF(SZ2->Z2_LIBRAS == "1", .T.,.F.) 
+        cMultiGet := SZ2->Z2_OBS 
+        
+    DbCloseArea()
+    ELSE
+       alert("Código não corresponde a nenhum registro no banco!")
+    ENDIF
+
+return
+
+//Funcão para Marcar todos os checksBox
 Static Function fMarcarTodos(lCheck)
 
     if lCheck
@@ -195,3 +220,9 @@ Static Function fMarcarTodos(lCheck)
 
 Return
 
+//Função para avançar para próxima aba
+Static Function ProximaAba()
+
+    oFolder:ShowPage(oFolder:nOption+1)
+
+Return
