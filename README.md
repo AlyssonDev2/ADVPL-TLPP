@@ -9,3 +9,13 @@
  - [Tela de Cadastro: ](CadastroAluno/projeto01.tlpp)  Interface de cadastro de alunos criada com elementos visuais do ADVPL, utiliza caixa de diálogo (TDialog) e pastas (TFolders) para organizar as seções da tela, como dados pessoais e endereço. Contando com validação de entrada dos dados, o fonte funciona como um CRUD de uma tabela personalizada de alunos. Suas principais funções incluem: cadastro, alteração, consultar e exclusão. É um exemplo prático de automação de processos administrativos utilizando AdvPL.
 
 <p align="center"><img src="Resource/cadastroAlunos.png"></p>
+
+ - [Modelos MVC: ](ModelosMVC) Fontes com rotinas criadas na arquitetura MVC (Model-View-Controller) em ADVPL:
+   - [Modelo 1](ModelosMVC/MVCModelo1.prw) - Utiliza apenas uma tabela.
+   - Modelo 2 (Em Breve) -  é um cadastro que possui 2 tabelas, uma cabeçalho e a outra são os itens (similar ao Pedido de Venda)
+   - Modelo X (Em Breve) -  estrutura de 3 tabelas ou mais  (Pai, Filho e Neto)
+  
+  - [Fontes base: ](PrimeirosFontes) Fontes de exemplo dedicados a fins de consulta, neles contêm os componentes visuais da linguagem, propriedade de consulta padrão do objeto TGet, acesso e alteração de tabelas padrões do Protheus, dentre outras classes e objetos essenciais no desenvolvimento.
+
+
+ 
