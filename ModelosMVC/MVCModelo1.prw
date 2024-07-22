@@ -1,7 +1,7 @@
 #include 'protheus.ch'
 #include 'FWMVCDef.ch'
 
-/*/{Protheus.doc} zzMVCSZ2
+/*/{Protheus.doc} MVCModelo1
 Fonte em MVC Modelo 1 para fins de estudo
 @type function
 @version  
@@ -9,7 +9,7 @@ Fonte em MVC Modelo 1 para fins de estudo
 @since 19/07/2024
 @return variant, return_description
 /*/
-User Function zMVCSZ2()
+User Function MVCModelo1()
     Local aArea   := GetArea() //Salva o ambiente ativo.
 	Local oBrowse
 
@@ -32,7 +32,7 @@ Static Function ModelDef()
                         
     Local oStructZS2 := FWFormStruct( 1, "SZ2") //Cria a estrutura a ser usada na View (1 Model / 2 View)
 
-    oModel := MPFormModel():New("zMVCSZ2M") 
+    oModel := MPFormModel():New("MVCModelo1M") 
 
     oModel:AddFields("FORMSZ2", /*Owner*/, oStructZS2) //Atribuindo formulário para o modelo de dados
 
@@ -46,7 +46,7 @@ return (oModel)
 
 Static Function ViewDef()
     // Cria um objeto de Modelo de dados baseado no ModelDef() do fonte informado
-    Local oModel := FWLoadModel('zMVCSZ2')
+    Local oModel := FWLoadModel('MVCModelo1')
                                     
     Local oStructZS2 := FWFormStruct( 2, "SZ2") // Cria a estrutura a ser usada na View (1 Model / 2 View)
 
@@ -73,14 +73,12 @@ return (oView)
 Static Function MenuDef()
     Local aRotina := {}
 
-    ADD OPTION aRotina TITLE 'Visualizar' ACTION 'VIEWDEF.zMVCSZ2' OPERATION 2 ACCESS 0
-    ADD OPTION aRotina TITLE 'Incluir'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 3 ACCESS 0
-    ADD OPTION aRotina TITLE 'Alterar'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 4 ACCESS 0
-    ADD OPTION aRotina TITLE 'Excluir'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 5 ACCESS 0
+    ADD OPTION aRotina TITLE 'Visualizar' ACTION 'VIEWDEF.MVCModelo1' OPERATION 2 ACCESS 0
+    ADD OPTION aRotina TITLE 'Incluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 3 ACCESS 0
+    ADD OPTION aRotina TITLE 'Alterar'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 4 ACCESS 0
+    ADD OPTION aRotina TITLE 'Excluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 5 ACCESS 0
     ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'      OPERATION 6 ACCESS 0
     ADD OPTION aRotina TITLE 'Cadastro Personalizado'   ACTION 'u_Projeto01'      OPERATION 6 ACCESS 0
-    
-
 
 Return (aRotina)
 
