@@ -77,5 +77,15 @@ Static Function MenuDef()
     ADD OPTION aRotina TITLE 'Incluir'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 3 ACCESS 0
     ADD OPTION aRotina TITLE 'Alterar'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 4 ACCESS 0
     ADD OPTION aRotina TITLE 'Excluir'    ACTION 'VIEWDEF.zMVCSZ2' OPERATION 5 ACCESS 0
+    ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'      OPERATION 6 ACCESS 0
+    ADD OPTION aRotina TITLE 'Cadastro Personalizado'   ACTION 'u_Projeto01'      OPERATION 6 ACCESS 0
+    
+
 
 Return (aRotina)
+
+User Function Mensagem()
+
+    MsgInfo("Está é a mensagem teste!", "Criando uma função em um fonte MCV")
+
+return
