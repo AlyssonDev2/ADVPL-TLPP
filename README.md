@@ -12,7 +12,7 @@
 
  - [Modelos MVC: ](ModelosMVC) Fontes com rotinas criadas na arquitetura MVC (Model-View-Controller) em ADVPL:
    - [Modelo 1](ModelosMVC/MVCModelo1.prw) - Utiliza apenas uma tabela.
-   - [Modelo 1](ModelosMVC/Modelo2MVC.prw) -  é um cadastro que possui 2 tabelas, uma cabeçalho e a outra são os itens (similar ao Pedido de Venda)
+   - [Modelo 2](ModelosMVC/Modelo2MVC.prw) -  é um cadastro que possui 2 tabelas, uma cabeçalho e a outra são os itens (similar ao Pedido de Venda)
    - Modelo X (Em Breve) -  estrutura de 3 tabelas ou mais  (Pai, Filho e Neto)
   
   - [Fontes base: ](PrimeirosFontes) Fontes de exemplo dedicados a fins de consulta, neles contêm os componentes visuais da linguagem, propriedade de consulta padrão do objeto TGet, acesso e alteração de tabelas padrões do Protheus, dentre outras classes e objetos essenciais no desenvolvimento.
