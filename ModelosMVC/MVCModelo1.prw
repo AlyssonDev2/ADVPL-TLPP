@@ -63,7 +63,7 @@ Static Function ViewDef()
     oView:CreateHorizontalBox("Tela", 100)
 
     // Relaciona o identificador (ID) da View com o "box" para exibição
-    oView:EnableTitleView("VIEWSZ2", "Visuzalização dos Alunos")
+    oView:EnableTitleView("VIEWSZ2", "Visualização dos Alunos")
 
     oView:SetCloseOnok({||.T.})
 
@@ -77,7 +77,7 @@ Static Function MenuDef()
     ADD OPTION aRotina TITLE 'Incluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 3 ACCESS 0
     ADD OPTION aRotina TITLE 'Alterar'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 4 ACCESS 0
     ADD OPTION aRotina TITLE 'Excluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 5 ACCESS 0
-    ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'      OPERATION 6 ACCESS 0
+    ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'         OPERATION 6 ACCESS 0
     ADD OPTION aRotina TITLE 'Cadastro Personalizado'   ACTION 'u_Projeto01'      OPERATION 6 ACCESS 0
 
 Return (aRotina)
