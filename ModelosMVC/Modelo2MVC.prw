@@ -162,12 +162,17 @@ oModel:GetModel("SZ7DETAIL"):SetUseOldGrid(.T.) //Finalizo setando o modelo anti
 
 return oModel
 
-/*Static Function ViewDef()
-
+Static Function ViewDef()
+    Local oView    := Nil
+    Local oModel   := FWLoadModel("Modelo2MVC")
+    //Objeto para montar a estrutura temporária do cabeçalho do View
+    Local oStCabec := FWFormViewStruct():New()
+    //Objeto para montar a parte de estrutura da grid
+    Local oStItens := FWFormStruct(2, "SZ7")
 
 return oView
 
-
+/*
 Static Function MenuDef()
 
    

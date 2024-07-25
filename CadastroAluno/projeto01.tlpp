@@ -43,7 +43,7 @@ User Function Projeto01()
     //Elementos Folder1(Dados Pessoais)
     oSayCodigo     := TSay():New(010,010,{||'Código'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetCodigo     := TGet():New(020,010,{|u|if(PCount()==0,cGetCodigo,cGetCodigo:=u)},oFolder:aDialogs[1],050,009,"@R 999999",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetCodigo,,,,.T. )
-    oGetCodigo:cF3 := "SZ2"
+    oGetCodigo:cF3 := "SZ5"
     
     oSayNome     := TSay():New(010,070,{||'Nome Completo'},oFolder:aDialogs[1],,,,,,.T.,CLR_BLUE,CLR_WHITE,200,20)
     oGetNome     := TGet():New(020,070,{|u|if(PCount()==0,cGetNome,cGetNome:=u)},oFolder:aDialogs[1],096,009,"@!",,0,,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F.,,cGetNome,,,, )
@@ -99,137 +99,137 @@ User Function Projeto01()
     oFolder:aDialogs[3], 240, 60, , , , , , .T. )
 
     oBitmapIncluir := TBitmap():New(220,030,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\incluir.bmp",.T.,oDlg1,;
-        {||IncluirSZ2()},,.F.,.F.,,,.F.,,.T.,,.F.)
+        {||IncluirSZ5()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapIncluir:lAutoSize := .T.
     oBitmapAlterar := TBitmap():New(220,090,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Alterar.bmp",.T.,oDlg1,;
-        {||AlterarSZ2()},,.F.,.F.,,,.F.,,.T.,,.F.)
+        {||AlterarSZ5()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapAlterar:lAutoSize := .T.
     oBitmapConsultar := TBitmap():New(220,150,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Consultar.bmp",.T.,oDlg1,;
         {||Alert("Clique em TBitmap1")},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapConsultar:lAutoSize := .T.
     oBitmapExcluir := TBitmap():New(220,210,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Excluir.bmp",.T.,oDlg1,;
-        {||ExcluirSZ2()},,.F.,.F.,,,.F.,,.T.,,.F.)
+        {||ExcluirSZ5()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapExcluir:lAutoSize := .T.
     oBitmapSair := TBitmap():New(220,270,260,184,,"C:\TOTVS\TOTVS12133\protheus_data\system\Sair.bmp",.T.,oDlg1,;
         {|| oDlg1:End()},,.F.,.F.,,,.F.,,.T.,,.F.)
     oBitmapSair:lAutoSize := .T.
 
-    oButtonIncluir   := TButton():New(250, 20, "Incluir", oDlg1,{|| IncluirSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
-    oButtonAlterar    := TButton():New(250, 80, "Alterar", oDlg1,{|| AlterarSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
-    oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| ConsultarSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
-    oButtonExcluir   := TButton():New(250, 200, "Excluir", oDlg1,{|| ExcluirSZ2()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonIncluir   := TButton():New(250, 20, "Incluir", oDlg1,{|| IncluirSZ5()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonAlterar    := TButton():New(250, 80, "Alterar", oDlg1,{|| AlterarSZ5()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonConsultar := TButton():New(250, 140, "Consultar", oDlg1,{|| ConsultarSZ5()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
+    oButtonExcluir   := TButton():New(250, 200, "Excluir", oDlg1,{|| ExcluirSZ5()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
     oButtonSair   := TButton():New(250, 260, "Sair", oDlg1,{||  oDlg1:End()}, 40, 15,,,.F.,.T.,.F.,,.F.,,,.F. )
 
     oDlg1:Activate(,,,.T.)
 return
 
 //Função para inclusão dos dados
-Static Function IncluirSZ2()
+Static Function IncluirSZ5()
 
-    DBSelectArea("SZ2")
+    DBSelectArea("SZ5")
     DBSetOrder(1)
     if VerificaVazios()
-        If DbSeek(xFilial("SZ2")+cGetCodigo)
+        If DbSeek(xFilial("SZ5")+cGetCodigo)
             Alert("Já existe um cadastro com esse código!")
         else    
-            RecLock("SZ2", .T.)
+            RecLock("SZ5", .T.)
                 //Dados Pessoais
-                SZ2->Z2_FILIAL := xFilial("SZ2")
-                SZ2->Z2_COD    := cGetCodigo
-                SZ2->Z2_NOME   := cGetNome
-                SZ2->Z2_NASC   := dGetNasc
-                SZ2->Z2_SEXO   := cValtoChar(nRadioSexo) //1 para Masculino e 2 para feminino
-                SZ2->Z2_DDD    := cGetDDD
-                SZ2->Z2_CEL    := cGetNumero
-                SZ2->Z2_CPF    := cGetCPF
-                SZ2->Z2_SERIE  := cOpcaoEnsino
+                SZ5->Z5_FILIAL := xFilial("SZ5")
+                SZ5->Z5_COD    := cGetCodigo
+                SZ5->Z5_NOME   := cGetNome
+                SZ5->Z5_NASC   := dGetNasc
+                SZ5->Z5_SEXO   := cValtoChar(nRadioSexo) //1 para Masculino e 2 para feminino
+                SZ5->Z5_DDD    := cGetDDD
+                SZ5->Z5_CEL    := cGetNumero
+                SZ5->Z5_CPF    := cGetCPF
+                SZ5->Z5_SERIE  := cOpcaoEnsino
                 
                 //Endereço
-                SZ2->Z2_END     := cGetEndereco
-                SZ2->Z2_BAIRRO  := cGetBairro
-                SZ2->Z2_CEP     := cGetCep
-                SZ2->Z2_CIDADE  := cGetCidade
-                SZ2->Z2_ESTADO  := nOpcaoEstado
+                SZ5->Z5_END     := cGetEndereco
+                SZ5->Z5_BAIRRO  := cGetBairro
+                SZ5->Z5_CEP     := cGetCep
+                SZ5->Z5_CIDADE  := cGetCidade
+                SZ5->Z5_ESTADO  := nOpcaoEstado
 
                 //Informações adicionais
-                SZ2->Z2_INF     := IIF(lCheck1, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_TEATRO  := IIF(lCheck2, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_INGLES  := IIF(lCheck3, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_LIBRAS  := IIF(lCheck4, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_OBS     := cMultiGet
+                SZ5->Z5_INF     := IIF(lCheck1, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_TEATRO  := IIF(lCheck2, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_INGLES  := IIF(lCheck3, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_LIBRAS  := IIF(lCheck4, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_OBS     := cMultiGet
             MsUnlock()
             MsgInfo("Aluno incluido com sucesso!", "SUCESSO")
             LimparDados()
         endif
     endif
-    SZ2->(DbCloseArea())
+    SZ5->(DbCloseArea())
 return
 
-//Função para consultar e pegar dados da tabela SZ2
-Static Function ConsultarSZ2()
-    DBSelectArea("SZ2")
+//Função para consultar e pegar dados da tabela SZ5
+Static Function ConsultarSZ5()
+    DBSelectArea("SZ5")
     DBSetOrder(1)
-    IF DBSeek(xFilial("SZ2")+cGetCodigo)
+    IF DBSeek(xFilial("SZ5")+cGetCodigo)
         //Dados Pessoais
-        cGetNome       := SZ2->Z2_NOME
-        dGetNasc       := SZ2->Z2_NASC
-        nRadioSexo     := Val(SZ2->Z2_SEXO) //1 para Masculino e 2 para feminino
-        cGetDDD        := SZ2->Z2_DDD
-        cGetNumero     := SZ2->Z2_CEL 
-        cGetCPF        := SZ2->Z2_CPF 
-        cOpcaoEnsino   := SZ2->Z2_SERIE
+        cGetNome       := SZ5->Z5_NOME
+        dGetNasc       := SZ5->Z5_NASC
+        nRadioSexo     := Val(SZ5->Z5_SEXO) //1 para Masculino e 2 para feminino
+        cGetDDD        := SZ5->Z5_DDD
+        cGetNumero     := SZ5->Z5_CEL 
+        cGetCPF        := SZ5->Z5_CPF 
+        cOpcaoEnsino   := SZ5->Z5_SERIE
         
         //Endereço
-        cGetEndereco := SZ2->Z2_END     
-        cGetBairro   := SZ2->Z2_BAIRRO  
-        cGetCep      := SZ2->Z2_CEP     
-        cGetCidade   := SZ2->Z2_CIDADE  
-        nOpcaoEstado := SZ2->Z2_ESTADO  
+        cGetEndereco := SZ5->Z5_END     
+        cGetBairro   := SZ5->Z5_BAIRRO  
+        cGetCep      := SZ5->Z5_CEP     
+        cGetCidade   := SZ5->Z5_CIDADE  
+        nOpcaoEstado := SZ5->Z5_ESTADO  
 
         //Informações adicionais
-        lCheck1   := IIF(SZ2->Z2_INF == "1", .T.,.F.)       
-        lCheck2   := IIF(SZ2->Z2_TEATRO == "1", .T.,.F.)  
-        lCheck3   := IIF(SZ2->Z2_INGLES == "1", .T.,.F.) 
-        lCheck4   := IIF(SZ2->Z2_LIBRAS == "1", .T.,.F.) 
-        cMultiGet := SZ2->Z2_OBS 
+        lCheck1   := IIF(SZ5->Z5_INF == "1", .T.,.F.)       
+        lCheck2   := IIF(SZ5->Z5_TEATRO == "1", .T.,.F.)  
+        lCheck3   := IIF(SZ5->Z5_INGLES == "1", .T.,.F.) 
+        lCheck4   := IIF(SZ5->Z5_LIBRAS == "1", .T.,.F.) 
+        cMultiGet := SZ5->Z5_OBS 
         
-    SZ2->(DbCloseArea())
+    SZ5->(DbCloseArea())
     ELSE
        alert("Código não corresponde a nenhum registro no banco!")
     ENDIF
 
 return
 
-//Função para alterar registros na tabela SZ2
-Static Function AlterarSZ2()
-    DBSelectArea("SZ2")
+//Função para alterar registros na tabela SZ5
+Static Function AlterarSZ5()
+    DBSelectArea("SZ5")
     if VerificaVazios()
-        If DbSeek(xFilial("SZ2")+cGetCodigo)
-            RecLock("SZ2", .F.)
+        If DbSeek(xFilial("SZ5")+cGetCodigo)
+            RecLock("SZ5", .F.)
                 //Dados Pessoais
-                SZ2->Z2_NOME   := cGetNome
-                SZ2->Z2_NASC   := dGetNasc
-                SZ2->Z2_SEXO   := cValtoChar(nRadioSexo) //1 para Masculino e 2 para feminino
-                SZ2->Z2_DDD    := cGetDDD
-                SZ2->Z2_CEL    := cGetNumero
-                SZ2->Z2_CPF    := cGetCPF
-                SZ2->Z2_SERIE  := cOpcaoEnsino
+                SZ5->Z5_NOME   := cGetNome
+                SZ5->Z5_NASC   := dGetNasc
+                SZ5->Z5_SEXO   := cValtoChar(nRadioSexo) //1 para Masculino e 2 para feminino
+                SZ5->Z5_DDD    := cGetDDD
+                SZ5->Z5_CEL    := cGetNumero
+                SZ5->Z5_CPF    := cGetCPF
+                SZ5->Z5_SERIE  := cOpcaoEnsino
                 
                 //Endereço
-                SZ2->Z2_END     := cGetEndereco
-                SZ2->Z2_BAIRRO  := cGetBairro
-                SZ2->Z2_CEP     := cGetCep
-                SZ2->Z2_CIDADE  := cGetCidade
-                SZ2->Z2_ESTADO  := nOpcaoEstado
+                SZ5->Z5_END     := cGetEndereco
+                SZ5->Z5_BAIRRO  := cGetBairro
+                SZ5->Z5_CEP     := cGetCep
+                SZ5->Z5_CIDADE  := cGetCidade
+                SZ5->Z5_ESTADO  := nOpcaoEstado
 
                 //Informações adicionais
-                SZ2->Z2_INF     := IIF(lCheck1, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_TEATRO  := IIF(lCheck2, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_INGLES  := IIF(lCheck3, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_LIBRAS  := IIF(lCheck4, "1","2") //1 para sim e 2 para não
-                SZ2->Z2_OBS     := cMultiGet
+                SZ5->Z5_INF     := IIF(lCheck1, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_TEATRO  := IIF(lCheck2, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_INGLES  := IIF(lCheck3, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_LIBRAS  := IIF(lCheck4, "1","2") //1 para sim e 2 para não
+                SZ5->Z5_OBS     := cMultiGet
             MsUnlock()
-            SZ2->(DbCloseArea())
+            SZ5->(DbCloseArea())
             MsgInfo("Aluno alterado com sucesso!", "SUCESSO")
         else    
             Alert("Código não corresponde a nenhum cadastro no banco.")
@@ -238,12 +238,12 @@ Static Function AlterarSZ2()
 return
 
 //Função para excluir registros
-Static Function ExcluirSZ2()
-    DBSelectArea("SZ2")
+Static Function ExcluirSZ5()
+    DBSelectArea("SZ5")
     DBSetOrder(1)
     if MsgYesNo("Tem certeza que deseja exluir o aluno de código: " + cGetCodigo + "?", "Confirmar Exclusão")
-            If DbSeek(xFilial("SZ2")+cGetCodigo)
-                RecLock("SZ2", .F.)
+            If DbSeek(xFilial("SZ5")+cGetCodigo)
+                RecLock("SZ5", .F.)
                     DbDelete()
                 MsUnlock()
                 MsgInfo("Aluno deletado com sucesso!", "SUCESSO")
@@ -252,7 +252,7 @@ Static Function ExcluirSZ2()
                 Alert("Código não corresponde a nenhum cadastro no banco.")
             endif
     endif
-    SZ2->(SZ2->(DbCloseArea()))
+    SZ5->(SZ5->(DbCloseArea()))
 return
 
 Static Function LimparDados()

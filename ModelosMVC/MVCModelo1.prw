@@ -25,7 +25,7 @@ User Function MVCModelo1()
     oBrowse:DisableDetails() //Desabilita detalhes do canto inferior da tela
     oBrowse:Activate()
     RestArea(aArea) //Restaura um ambiente salvo anteriormente pela função GETAREA().
-Return (oBrowse)
+Return oBrowse
 
 Static Function ModelDef()
     Local oModel     := nil   
@@ -42,16 +42,16 @@ Static Function ModelDef()
 
     oModel:GetModel("FORMSZ2"):SetDescription("Formulário de Cadastro de Alunos.")
 
-return (oModel)
+return oModel
 
 Static Function ViewDef()
     // Cria um objeto de Modelo de dados baseado no ModelDef() do fonte informado
-    Local oModel := FWLoadModel('MVCModelo1')
+    Local oModel     := FWLoadModel('MVCModelo1')
                                     
     Local oStructZS2 := FWFormStruct( 2, "SZ2") // Cria a estrutura a ser usada na View (1 Model / 2 View)
 
     // Interface de visualização
-    Local oView
+    Local oView      := Nil 
     // Cria o objeto de View
     oView := FWFormView():New()
 
@@ -65,10 +65,10 @@ Static Function ViewDef()
     // Relaciona o identificador (ID) da View com o "box" para exibição
     oView:EnableTitleView("VIEWSZ2", "Visualização dos Alunos")
 
-    oView:SetCloseOnok({||.T.})
+    oView:SetCloseOnOk({|| .T.})
 
     oView:SetOwnerView("VIEWSZ2","Tela")
-return (oView)
+return oView
 
 Static Function MenuDef()
     Local aRotina := {}
@@ -77,10 +77,10 @@ Static Function MenuDef()
     ADD OPTION aRotina TITLE 'Incluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 3 ACCESS 0
     ADD OPTION aRotina TITLE 'Alterar'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 4 ACCESS 0
     ADD OPTION aRotina TITLE 'Excluir'    ACTION 'VIEWDEF.MVCModelo1' OPERATION 5 ACCESS 0
-    ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'         OPERATION 6 ACCESS 0
-    ADD OPTION aRotina TITLE 'Cadastro Personalizado'   ACTION 'u_Projeto01'      OPERATION 6 ACCESS 0
+    //ADD OPTION aRotina TITLE 'Mensagem'   ACTION 'U_Mensagem'         OPERATION 6 ACCESS 0
+   
 
-Return (aRotina)
+Return aRotina
 
 User Function Mensagem()
 
