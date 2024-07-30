@@ -14,13 +14,13 @@ User Function MVCModelo1()
 	Local oBrowse
 
     oBrowse := FWMBrowse():New()
-    oBrowse:SetAlias('SZ2')
+    oBrowse:SetAlias('Sz5')
 
     oBrowse:SetDescription("Meu Primeiro Browse - Tela de Alunos") //Cria a título do Browse
                       //Condicional                      /Cor    /Descrição
-    oBrowse:AddLegend("len(allTrim(SZ2->Z2_SERIE))<=15","GREEN", "Aluno do Ensino Médio") //Adiciona legenda
-    oBrowse:AddLegend("len(alltrim(SZ2->Z2_SERIE))>15","BLUE", "Aluno do Ensino Fundamental") //Adiciona legenda
-    oBrowse:SetOnlyFields({'Z2_COD','Z2_NOME','Z2_SERIE','Z2_SEXO'}) //Selecina campos a serem exibidos
+    oBrowse:AddLegend("len(allTrim(Sz5->z5_SERIE))<=15","GREEN", "Aluno do Ensino Médio") //Adiciona legenda
+    oBrowse:AddLegend("len(alltrim(Sz5->z5_SERIE))>15","BLUE", "Aluno do Ensino Fundamental") //Adiciona legenda
+    oBrowse:SetOnlyFields({'z5_COD','z5_NOME','z5_SERIE','z5_SEXO'}) //Selecina campos a serem exibidos
 
     oBrowse:DisableDetails() //Desabilita detalhes do canto inferior da tela
     oBrowse:Activate()
@@ -30,17 +30,17 @@ Return oBrowse
 Static Function ModelDef()
     Local oModel     := nil   
                         
-    Local oStructZS2 := FWFormStruct( 1, "SZ2") //Cria a estrutura a ser usada na View (1 Model / 2 View)
+    Local oStructZS2 := FWFormStruct( 1, "Sz5") //Cria a estrutura a ser usada na View (1 Model / 2 View)
 
     oModel := MPFormModel():New("MVCModelo1M") 
 
-    oModel:AddFields("FORMSZ2", /*Owner*/, oStructZS2) //Atribuindo formulário para o modelo de dados
+    oModel:AddFields("FORMSz5", /*Owner*/, oStructZS2) //Atribuindo formulário para o modelo de dados
 
-    oModel:SetPrimaryKey({"Z2_FILIAL", "Z2_COD"}) //Definindo chave primária
+    oModel:SetPrimaryKey({"z5_FILIAL", "z5_COD"}) //Definindo chave primária
 
     oModel:SetDescription("Modelo de dado de Cadastro de alunos")
 
-    oModel:GetModel("FORMSZ2"):SetDescription("Formulário de Cadastro de Alunos.")
+    oModel:GetModel("FORMSz5"):SetDescription("Formulário de Cadastro de Alunos.")
 
 return oModel
 
@@ -48,7 +48,7 @@ Static Function ViewDef()
     // Cria um objeto de Modelo de dados baseado no ModelDef() do fonte informado
     Local oModel     := FWLoadModel('MVCModelo1')
                                     
-    Local oStructZS2 := FWFormStruct( 2, "SZ2") // Cria a estrutura a ser usada na View (1 Model / 2 View)
+    Local oStructZS2 := FWFormStruct( 2, "Sz5") // Cria a estrutura a ser usada na View (1 Model / 2 View)
 
     // Interface de visualização
     Local oView      := Nil 
@@ -57,17 +57,17 @@ Static Function ViewDef()
 
     // Define qual o Modelo de dados será utilizado na View
     oView:SetModel( oModel )
-    oView:AddField("VIEWSZ2", oStructZS2, "FORMSZ2") //Atribuindo formulário para o modelo de dados
+    oView:AddField("VIEWSz5", oStructZS2, "FORMSz5") //Atribuindo formulário para o modelo de dados
 
     // Criar um "box" horizontal para receber algum elemento da view
     oView:CreateHorizontalBox("Tela", 100)
 
     // Relaciona o identificador (ID) da View com o "box" para exibição
-    oView:EnableTitleView("VIEWSZ2", "Visualização dos Alunos")
+    oView:EnableTitleView("VIEWSz5", "Visualização dos Alunos")
 
     oView:SetCloseOnOk({|| .T.})
 
-    oView:SetOwnerView("VIEWSZ2","Tela")
+    oView:SetOwnerView("VIEWSz5","Tela")
 return oView
 
 Static Function MenuDef()
