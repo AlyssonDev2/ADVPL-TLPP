@@ -37,7 +37,7 @@ Static Function MenuDef()
         aAdd(aMenu,aMenuAut[n])
     Next n
 
-return aMenu
+return aMenuAut
 
 
 Static Function ModelDef()
