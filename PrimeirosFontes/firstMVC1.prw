@@ -34,9 +34,8 @@ Static Function BrowseDef()
 return 
 
 Static Function MenuDef()
-    Local aMenu := {}
+    Local aMenu := FWMvcMenu("ModeloXMVC")
 
-     ADD OPTION aMenu TITLE 'Visualizar' ACTION 'VIEWDEF.firstMVC1'    OPERATION 2 ACCESS 0
      ADD OPTION aMenu TITLE 'Legendas'    ACTION 'u_legendaSA1'        OPERATION 6 ACCESS 0
  
 return aMenu
