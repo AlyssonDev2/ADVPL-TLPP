@@ -16,17 +16,25 @@ WSSTRUCT STCliente
     WSDATA clienteA1CEP     AS STRING OPTIONAL
 ENDWSSTRUCT
 
+//Estrutura de retorno (sucesso ou sem sucesso)
+WSSTRUCT STRetMsg
+    WSDATA cRet     AS STRING OPTIONAL
+    WSDATA cMessage AS STRING OPTIONAL
+ENDWSSTRUCT
+
+//Retorno do Webservice (já que o metódo WS só aceita um parametro, cria-se uma classe de retorno geral e suas propriedades)
 WSSTRUCT STRetornoGeral 
-    WSDATA WSSTClient AS STCliente
+    WSDATA WSSTClient  AS STCliente
+    WSDATA WSSTRegMsg  AS STRetMsg
 ENDWSSTRUCT
 
 WSSERVICE WSCLISA1 DESCRIPTION "Serviço para retornar os dados de cliente específico"
     //Código que será requisitado pelo método de busca do cliente
     WSDATA _cCodClienteLoja AS STRING
     //Chamada da estrutura de retorno que será retornada pelo método
-    WSDATA WSRetornoGeral   AS STRetornoGeral
+    WSDATA WSRetornoGeral         AS STRetornoGeral
 
-    WSMETHOD BuscaCliente    DESCRIPTION "Busca clientes com base no código e loja"
+    WSMETHOD BuscaCliente     DESCRIPTION "Busca clientes com base no código e loja"
 ENDWSSERVICE
 
 //       MÉTODO       PARAMETRO DE ENTRADA       RETORNO DO WS         WS A QUAL PERTENCE
@@ -36,6 +44,8 @@ WSMETHOD BuscaCliente WSRECEIVE _cCodClienteLoja WSSEND WSRetornoGeral WSSERVICE
     SA1->(DbSetOrder(1))
 
     IF SA1->(DbSeek(xFilial("SA1")+cCliCodLoja))
+        ::WSRetornoGeral:WSSTRegMsg:cRet             := "[T]"
+        ::WSRetornoGeral:WSSTRegMsg:cMessage         := "Sucesso! Registro encontrado."
         ::WSRetornoGeral:WSSTClient:clienteA1COD     := SA1->A1_COD
         ::WSRetornoGeral:WSSTClient:clienteA1LOJA    := SA1->A1_LOJA
         ::WSRetornoGeral:WSSTClient:clienteA1NOME    := SA1->A1_NOME
@@ -45,6 +55,9 @@ WSMETHOD BuscaCliente WSRECEIVE _cCodClienteLoja WSSEND WSRetornoGeral WSSERVICE
         ::WSRetornoGeral:WSSTClient:clienteA1ESTADO  := SA1->A1_EST
         ::WSRetornoGeral:WSSTClient:clienteA1MUNICIP := SA1->A1_MUN
         ::WSRetornoGeral:WSSTClient:clienteA1END     := SA1->A1_END
+    ELSE
+        ::WSRetornoGeral:WSSTRegMsg:cRet     := "[F]"
+        ::WSRetornoGeral:WSSTRegMsg:cMessage := "Não existe resultado para esta busca."
     ENDIF
 
     SA1->(DbCloseArea())

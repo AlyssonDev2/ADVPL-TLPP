@@ -1,0 +1,21 @@
+#include 'protheus.ch'
+#include 'TOTVS.ch'
+
+
+/*Função usada para testar Jobs no AppServer
+
+Exemplo de inclusão de Job
+
+[MEUJOB]
+main=u_meuJob
+environment=PROTHEUSBANCO
+nparms=2
+parm1="Primeiro parametro"
+parm2="Já esse é o segundo"
+
+*/
+User Function MeuJob(cParm1,cParm2)
+
+    conout("Parametros passados pelo Job no AppServer: 1 - " + cParm1 + " / 2 - " + cParm2)
+
+return
