@@ -1,8 +1,9 @@
-#include 'Protheus.ch'
-#include 'APWEBSRV.CH'
-#include 'topconn.ch'
+#Include 'Protheus.ch'
+#Include 'APWEBSRV.CH'
+#Include 'TOPCONN.CH'
 
-WSSTRUCT STProduto
+//Estrutura de dados do Produto
+WSSTRUCT StProd
     WSDATA produtoB1cod     AS STRING OPTINAL
     WSDATA produtoB1desc    AS STRING OPTINAL
     WSDATA produtoB1unidade AS STRING OPTINAL
@@ -11,14 +12,15 @@ WSSTRUCT STProduto
     WSDATA produtoB1grupo   AS STRING OPTINAL
 ENDWSSTRUCT
 
-WSTRUCT STRetMsgProd
+//Estrutura de Dados para retorno de mensagem
+WSTRUCT StRetMsgProduto
     WSDATA cRet      AS STRING OPTIONAL
     WSDATA cMenssage AS STRING OPTINAL
 ENDWSSTRUCT
 
 WSSTRUCT STRetGeralProd
-    WSDATA WSSTProduto AS STProduto
-    WSDATA WSSTRetMsg  AS STRetMsgProd
+    WSDATA WSSTProduto AS StProd
+    WSDATA WSSTRetMsg  AS StRetMsgProduto
 ENDWSSTRUCT
 
 WSSERVICE WSPROSB1 DESCRIPTION "Serviço para retornar os dados dos produtos"
@@ -51,6 +53,5 @@ WSMETHOD BuscaProduto WSRECEIVE _cCodProduto WSSEND STRetGeralProd WSSERVICE WSP
 
     SB1->(DbCloseArea())
 RETURN .T.
-
 
 
